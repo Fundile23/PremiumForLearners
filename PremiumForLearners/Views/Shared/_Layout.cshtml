@@ -1,0 +1,425 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PremiumForLearners</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <meta name="theme-color" content="#3e352c" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+
+        /* Mobile Responsive Styles */
+        @@media (max-width: 768px) {
+            /* General */
+            body {
+                font-size: 14px;
+            }
+            /* Navigation */
+            .navbar {
+                padding: 12px 0 !important;
+            }
+
+            .navbar-brand {
+                font-size: 1.4rem !important;
+            }
+
+            .nav-link {
+                margin: 8px 0 !important;
+                text-align: center;
+            }
+            /* Buttons - touch friendly */
+            .btn-primary-custom,
+            .btn-outline-custom,
+            button,
+            a.btn {
+                padding: 12px 20px !important;
+                min-height: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            /* Cards */
+            .card {
+                margin-bottom: 16px;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+            /* Stats Section */
+            .stat-item {
+                padding: 20px 10px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+            /* Hero Section */
+            .hero {
+                padding: 100px 0 40px !important;
+                text-align: center;
+            }
+
+                .hero h1 {
+                    font-size: 2rem !important;
+                }
+
+            .hero-subtitle {
+                font-size: 1rem !important;
+            }
+            /* Features Cards */
+            .feature-card, .step-card {
+                padding: 20px;
+            }
+
+            .feature-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+            /* Tables - make scrollable on mobile */
+            .table-responsive {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+                .table-responsive table {
+                    min-width: 600px;
+                }
+            /* Forms - touch friendly */
+            input, select, textarea {
+                font-size: 16px !important; /* Prevents zoom on mobile */
+                padding: 12px !important;
+            }
+            /* Flowing text */
+            .flowing-text {
+                font-size: 1.5rem !important;
+            }
+            /* Modals - full width on mobile */
+            .modal-dialog {
+                margin: 10px;
+            }
+            /* Toast notifications */
+            .toast-container {
+                bottom: 10px;
+                right: 10px;
+                left: 10px;
+            }
+
+            .toast {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Tablet Styles */
+        @@media (min-width: 769px) and (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .feature-card, .step-card {
+                padding: 25px;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Large Desktop */
+        @@media (min-width: 1400px) {
+            .container {
+                max-width: 1320px;
+            }
+        }
+
+        /* Touch Device Hover Fix */
+        @@media (hover: hover) {
+            .feature-card:hover,
+            .step-card:hover,
+            .stat-item:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        @@media (hover: none) {
+            /* No hover effects on touch devices */
+            .feature-card:hover,
+            .step-card:hover,
+            .stat-item:hover {
+                transform: none;
+            }
+            /* Active state for touch */
+            .feature-card:active,
+            .step-card:active,
+            .stat-item:active {
+                transform: scale(0.98);
+                transition: transform 0.1s ease;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(62, 53, 44, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--beige-light);
+            border-top-color: var(--brown-soft);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @@keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        :root {
+            --soft-blue: #E8F1FF;
+            --soft-green: #E8F5E9;
+            --primary-green: #4CAF50;
+            --primary-blue: #2196F3;
+            --dark-green: #1B5E2F;
+            --pure-white: #FFFFFF;
+            --off-white: #FAFAFA;
+            --dark-text: #1A2A2A;
+            --grey-text: #6B7B7B;
+            --border-radius-card: 24px;
+            --transition-speed: 0.3s;
+            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--pure-white);
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--pure-white) !important;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-link {
+            color: var(--grey-text) !important;
+            font-weight: 500;
+            transition: color var(--transition-speed) ease;
+            margin: 0 0.8rem;
+        }
+
+            .nav-link:hover, .nav-link.active {
+                color: var(--primary-green) !important;
+            }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: var(--dark-green);
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            transition: all var(--transition-speed) ease;
+            color: white;
+        }
+
+            .btn-primary:hover {
+                background-color: var(--primary-green);
+                transform: translateY(-2px);
+                box-shadow: 0 10px 25px rgba(76, 175, 80, 0.2);
+            }
+
+        .btn-outline-primary {
+            background: transparent;
+            border: 1px solid var(--primary-green);
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 500;
+            color: var(--primary-green);
+            transition: all var(--transition-speed) ease;
+        }
+
+            .btn-outline-primary:hover {
+                background: var(--primary-green);
+                color: white;
+            }
+
+        /* Cards */
+        .card-modern {
+            background: var(--pure-white);
+            border: none;
+            border-radius: var(--border-radius-card);
+            padding: 1.5rem;
+            transition: all var(--transition-speed) ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+            .card-modern:hover {
+                transform: translateY(-4px);
+                box-shadow: var(--shadow-md);
+            }
+
+        /* Section Backgrounds */
+        .section-white {
+            background: var(--pure-white);
+            padding: 5rem 0;
+        }
+
+        .section-soft {
+            background: var(--off-white);
+            padding: 5rem 0;
+        }
+
+        /* Footer - Removed */
+    </style>
+    <!-- Animate.css for entrance animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <!-- GSAP for advanced animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- CountUp for number animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            @{
+                var homeUrl = "/";
+                if (Context.User.Identity?.IsAuthenticated == true)
+                {
+                    homeUrl = User.IsInRole("Admin") ? "/Admin/Dashboard" : "/Parent/Dashboard";
+                }
+            }
+            <a class="navbar-brand" href="@homeUrl">PremiumForLearners</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@homeUrl">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    @if (Context.User.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Logout">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Account/Login">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main style="min-height: calc(100vh - 200px); padding: 30px 0;">
+        @RenderBody()
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // Check if online
+        window.addEventListener('online', function() {
+            showToast('Connection restored', 'success');
+        });
+
+        window.addEventListener('offline', function() {
+            showToast('You are offline. Some features may not work.', 'warning');
+        });
+
+        function showToast(message, type) {
+            // Create toast element
+            var toast = document.createElement('div');
+            toast.className = 'toast align-items-center text-white bg-' + (type === 'success' ? 'success' : 'warning') + ' position-fixed bottom-0 end-0 m-3';
+            toast.style.zIndex = '9999';
+            toast.innerHTML = '<div class="d-flex"><div class="toast-body">' + message + '</div><button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button></div>';
+            document.body.appendChild(toast);
+            var bsToast = new bootstrap.Toast(toast, { autohide: true, delay: 3000 });
+            bsToast.show();
+            toast.addEventListener('hidden.bs.toast', function() { toast.remove(); });
+        }
+    </script>
+</body>
+</html>

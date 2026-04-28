@@ -1,0 +1,137 @@
+﻿@model List<PremiumForLearners.Models.Payment>
+
+@{
+    ViewData["Title"] = "Verify Payments";
+    var currentStatus = ViewBag.CurrentStatus as string ?? "Pending";
+    var statusCounts = ViewBag.StatusCounts;
+}
+
+<div class="container">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card p-4">
+                <h2><i class="fas fa-credit-card me-2"></i>Payment Verification</h2>
+                <p class="text-muted">Review and verify parent payments</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status Tabs -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group" role="group">
+                <a href="/Admin/VerifyPayments?status=Pending"
+                   class="btn @(currentStatus == "Pending" ? "btn-warning" : "btn-outline-warning")">
+                    Pending
+                </a>
+                <a href="/Admin/VerifyPayments?status=Verified"
+                   class="btn @(currentStatus == "Verified" ? "btn-success" : "btn-outline-success")">
+                    Verified
+                </a>
+                <a href="/Admin/VerifyPayments?status=Rejected"
+                   class="btn @(currentStatus == "Rejected" ? "btn-danger" : "btn-outline-danger")">
+                    Rejected
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payments Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    @if (Model.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Student</th>
+                                        <th>Grade</th>
+                                        <th>Payment Type</th>
+                                        <th>Amount</th>
+                                        <th>Reference</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var payment in Model)
+                                    {
+                                        <tr class="@(payment.Status == "Pending" ? "table-warning" : payment.Status == "Verified" ? "table-success" : "table-danger")">
+                                            <td>@payment.PaymentDate.ToString("dd MMM yyyy")</td>
+                                            <td><strong>@payment.Student?.FullName</strong></td>
+                                            <td>Grade @payment.Student?.ApplyingGrade</td>
+                                            <td>@payment.PaymentType</td>
+                                            <td class="fw-bold">R @payment.Amount.ToString("N2")</td>
+                                            <td><small>@payment.Reference</small></td>
+                                            <td>
+                                                @if (payment.Status == "Pending")
+                                                {
+                                                    <span class="badge bg-warning">Pending</span>
+                                                }
+                                                else if (payment.Status == "Verified")
+                                                {
+                                                    <span class="badge bg-success">Verified</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge bg-danger">Rejected</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (payment.Status == "Pending")
+                                                {
+                                                    <!-- Simple form for Verify - NO MODAL -->
+                                                    <form asp-action="VerifyPayment" asp-controller="Admin" method="post" style="display: inline-block;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="paymentId" value="@payment.Id" />
+                                                        <input type="hidden" name="id" value="@payment.StudentId" />
+                                                        <input type="hidden" name="approve" value="true" />
+                                                        <input type="hidden" name="notes" value="Payment verified by admin" />
+                                                        <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Verify this payment?')">
+                                                            <i class="fas fa-check"></i> Verify
+                                                        </button>
+                                                    </form>
+
+                                                    <!-- Simple form for Reject - NO MODAL -->
+                                                    <form asp-action="VerifyPayment" asp-controller="Admin" method="post" style="display: inline-block;">
+                                                        @Html.AntiForgeryToken()
+                                                        <input type="hidden" name="paymentId" value="@payment.Id" />
+                                                        <input type="hidden" name="id" value="@payment.StudentId" />
+                                                        <input type="hidden" name="approve" value="false" />
+                                                        <input type="text" name="notes" placeholder="Reason" required style="width: 100px; padding: 4px; margin-right: 4px;" />
+                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Reject this payment?')">
+                                                            <i class="fas fa-times"></i> Reject
+                                                        </button>
+                                                    </form>
+                                                }
+                                                else if (payment.Status == "Verified")
+                                                {
+                                                    <span class="text-success"><i class="fas fa-check-circle"></i> Verified</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-danger">Rejected</span>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center py-5">
+                            <i class="fas fa-check-circle fa-3x text-success mb-3"></i>
+                            <p class="text-muted">No @currentStatus.ToLower() payments to review.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+﻿<div class="loading">
+    <div class="loading-spinner"></div>
+</div>
+<script>
+    setTimeout(function() {
+        document.querySelector('.loading').style.opacity = '0';
+        setTimeout(function() {
+            document.querySelector('.loading').style.display = 'none';
+        }, 300);
+    }, 1000);
+</script>

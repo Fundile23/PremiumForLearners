@@ -1,0 +1,62 @@
+﻿@model PremiumForLearners.Models.TransferRequest
+@{
+    var student = ViewBag.Student as PremiumForLearners.Models.Student;
+}
+
+@{
+    ViewData["Title"] = "Transfer Request";
+}
+
+<div class="container" style="max-width: 600px; padding: 40px 0;">
+    <div class="card p-4" data-aos="fade-up">
+        <h2 class="mb-2">School Transfer Request</h2>
+        @if (student != null)
+        {
+            <p class="text-muted mb-4">For: @student.FullName (Grade @student.ApplyingGrade)</p>
+        }
+       
+
+        <form asp-action="TransferRequest" method="post">
+            <input type="hidden" asp-for="StudentId" />
+
+            <div class="mb-3">
+                <label asp-for="FromSchool" class="form-label">Current School</label>
+                <input asp-for="FromSchool" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ToSchool" class="form-label">New School</label>
+                <input asp-for="ToSchool" class="form-control" required />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Reason" class="form-label">Reason for Transfer</label>
+                <select asp-for="Reason" class="form-select" required>
+                    <option value="">Select Reason</option>
+                    <option value="Change of Address">Change of Address</option>
+                    <option value="Academic">Academic Reasons</option>
+                    <option value="Relocation">Family Relocation</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ExpectedStartDate" class="form-label">Expected Start Date at New School</label>
+                <input asp-for="ExpectedStartDate" class="form-control" type="date" />
+            </div>
+
+            <div class="mb-4">
+                <p class="mb-2">The following records will be automatically included:</p>
+                <ul class="small">
+                    <li>✓ Previous 2 years of grades</li>
+                    <li>✓ Attendance records</li>
+                    <li>✓ Report cards</li>
+                    <li>✓ Discipline record (if any)</li>
+                </ul>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Transfer Request</button>
+            <a href="/Parent/StudentDetails/@Model.StudentId" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,2218 @@
+﻿@{
+    ViewData["Title"] = "PremiumForLearners - Smart School Registration";
+}
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    :root {
+        --black: #000000;
+        --white: #ffffff;
+        --gray-dark: #1a1a1a;
+        --gray-medium: #2c2c2c;
+        --gray-light: #3a3a3a;
+        --gray-lighter: #f5f5f5;
+        --gray-text: #6b6b6b;
+        --gray-border: #333333;
+        --sky-blue: #E8F4FD;
+        --royal-blue: #1e3a8a;
+        --royal-blue-light: #2563eb;
+        --teal: #0f766e;
+        --teal-light: #14b8a6;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--white);
+        color: var(--gray-text);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+        color: var(--black);
+    }
+
+    /* Navigation */
+    .navbar {
+        background-color: var(--white) !important;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .navbar-brand {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: var(--black) !important;
+        font-size: 1.8rem;
+    }
+
+    .nav-link {
+        color: var(--gray-medium) !important;
+        font-weight: 500;
+        margin: 0 15px;
+        transition: color 0.3s ease;
+    }
+
+        .nav-link:hover {
+            color: var(--black) !important;
+        }
+
+    /* Buttons */
+    .btn-primary-custom {
+        background-color: var(--black);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-primary-custom:hover {
+            background-color: var(--gray-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+    .btn-outline-custom {
+        background-color: transparent;
+        border: 2px solid var(--black);
+        color: var(--black);
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+        .btn-outline-custom:hover {
+            background-color: var(--black);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+    /* Hero Section */
+    .hero {
+        padding: 20px 0 60px;
+        background: var(--white);
+        position: relative;
+        overflow: hidden;
+    }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #f0f0f0 0%, transparent 70%);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+        .hero h1 .highlight {
+            color: var(--black);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 .light-text {
+            color: var(--gray-text);
+            font-weight: 500;
+        }
+
+    .hero .highlight::after {
+        content: '';
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        background-color: #e0e0e0;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: var(--gray-text);
+        margin-bottom: 30px;
+    }
+
+    /* Hero Video Container */
+    .hero-video-container {
+        position: relative;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 30px;
+        overflow: hidden;
+        box-shadow: 0 30px 50px rgba(0,0,0,0.15);
+        transition: all 0.4s ease;
+        opacity: 0;
+        transform: scale(0.95);
+        animation: videoReveal 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+    }
+
+        .hero-video-container:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 40px 60px rgba(0,0,0,0.2);
+        }
+
+    @@keyframes videoReveal {
+        0% {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .hero-video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Video Overlay Buttons */
+    .video-buttons-overlay {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        opacity: 0;
+        animation: buttonsAppear 0.6s ease-out forwards;
+        animation-delay: 0.4s;
+    }
+
+    @@keyframes buttonsAppear {
+        0% {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .prototype-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .stat-prototype-small {
+        background: transparent;
+        border: 1.5px solid rgba(255, 255, 255, 0.9);
+        border-radius: 30px;
+        padding: 6px 14px;
+        backdrop-filter: blur(4px);
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .stat-prototype-small:hover {
+            background: rgba(0, 0, 0, 0.2);
+            border-color: white;
+            transform: translateX(3px);
+        }
+
+        .stat-prototype-small .stat-text {
+            color: white;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .stat-prototype-small .stat-number {
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 2px;
+        }
+
+    .plus-btn-small {
+        width: 28px;
+        height: 28px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+        .plus-btn-small i {
+            color: black;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .plus-btn-small:hover {
+            transform: scale(1.1);
+            background: #f0f0f0;
+        }
+
+    .video-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+        padding: 50px 25px 25px;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .hero-video-container:hover .video-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .video-text {
+        color: white;
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        margin: 0;
+        letter-spacing: 0.5px;
+    }
+
+        .video-text span {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+    /* Mission Statement Section */
+    .mission-section {
+        padding: 40px 0 20px;
+        background: var(--white);
+        text-align: center;
+    }
+
+    .mission-text {
+        max-width: 900px;
+        margin: 0 auto;
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+
+    .mission-keyword {
+        color: var(--black);
+        font-weight: 600;
+    }
+
+    .mission-light {
+        color: var(--gray-text);
+    }
+
+    /* Stats Section */
+    .stats-section {
+        padding: 60px 0;
+        background-color: var(--white);
+    }
+
+    .stat-card-custom {
+        border-radius: 24px;
+        padding: 28px 20px;
+        height: 100%;
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: scale(0);
+        transform-origin: center center;
+    }
+
+        .stat-card-custom.animate-in {
+            animation: sequentialOpen 0.8s cubic-bezier(0.2, 0.9, 0.4, 1) forwards;
+        }
+
+    @@keyframes sequentialOpen {
+        0% {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        40% {
+            opacity: 0.3;
+            transform: scale(0.6);
+        }
+
+        70% {
+            opacity: 0.7;
+            transform: scale(1.02);
+        }
+
+        100% {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    .stat-card-custom .icon-wrapper,
+    .stat-card-custom .stat-title,
+    .stat-card-custom .stat-description,
+    .stat-card-custom .stat-badge,
+    .stat-card-custom .image-card-content {
+        opacity: 0;
+        animation: contentFadeIn 0.5s ease forwards;
+    }
+
+    .stat-card-custom .icon-wrapper {
+        animation-delay: 0.4s;
+    }
+
+    .stat-card-custom .stat-title {
+        animation-delay: 0.5s;
+    }
+
+    .stat-card-custom .stat-description {
+        animation-delay: 0.6s;
+    }
+
+    .stat-card-custom .stat-badge {
+        animation-delay: 0.7s;
+    }
+
+    .stat-card-custom .image-card-content {
+        animation-delay: 0.5s;
+    }
+
+    @@keyframes contentFadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .stat-card-custom:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 35px rgba(0,0,0,0.1);
+    }
+
+    .royal-blue {
+        background: linear-gradient(135deg, var(--royal-blue) 0%, var(--royal-blue-light) 100%);
+        color: white;
+    }
+
+        .royal-blue .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .royal-blue .icon-wrapper i {
+                font-size: 1.8rem;
+                color: white;
+            }
+
+    .stat-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .stat-description {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        opacity: 0.9;
+    }
+
+    .stat-badge {
+        display: inline-block;
+        background: rgba(255,255,255,0.2);
+        padding: 6px 12px;
+        border-radius: 40px;
+        font-size: 0.7rem;
+        font-weight: 500;
+    }
+
+    .teal-bg {
+        background: linear-gradient(135deg, var(--teal) 0%, var(--teal-light) 100%);
+        color: white;
+    }
+
+        .teal-bg .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+            .teal-bg .icon-wrapper i {
+                font-size: 1.8rem;
+                color: white;
+            }
+
+    .stat-description.large {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .image-card {
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        color: white;
+        display: flex;
+        align-items: flex-end;
+    }
+
+    .image-overlay-dark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 100%);
+        border-radius: 24px;
+    }
+
+    .image-card-content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+    }
+
+    .image-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: white;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .image-text {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        margin-bottom: 16px;
+        line-height: 1.4;
+    }
+
+    .btn-white-outline {
+        display: inline-block;
+        background: transparent;
+        border: 1.5px solid white;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+        .btn-white-outline:hover {
+            background: white;
+            color: black;
+            transform: translateX(5px);
+        }
+
+    /* ========== FEATURES SECTION ========== */
+    .feature-section {
+        padding: 60px 0;
+        background-color: var(--white);
+    }
+
+    .custom-features-layout {
+        display: flex;
+        gap: 30px;
+        align-items: stretch;
+    }
+
+    /* LEFT SIDE - Easy Registration (Large but compact) */
+    .feature-left-large {
+        flex: 2;
+    }
+
+    .feature-card-large {
+        background-size: cover;
+        background-position: center;
+        border-radius: 28px;
+        padding: 32px 28px;
+        border: 1px solid #e8e8e8;
+        transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        color: white;
+    }
+
+        .feature-card-large::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.35) 100%);
+            border-radius: 28px;
+            z-index: 0;
+        }
+
+        .feature-card-large > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card-large:hover {
+            transform: translateY(-6px);
+            border-color: var(--black);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+        }
+
+        .feature-card-large h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .feature-card-large p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .feature-card-large .feature-link a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.3s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            padding-bottom: 2px;
+        }
+
+            .feature-card-large .feature-link a:hover {
+                gap: 10px;
+                border-bottom-color: white;
+            }
+
+    /* RIGHT SIDE */
+    .feature-right-side {
+        flex: 1.2;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    /* School Transfers (Medium-Large) */
+    .feature-card-medium {
+        background-size: cover;
+        background-position: center;
+        border-radius: 24px;
+        padding: 20px 22px;
+        border: 1px solid #e8e8e8;
+        transition: all 0.3s ease;
+        position: relative;
+        color: white;
+    }
+
+        .feature-card-medium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.25) 100%);
+            border-radius: 24px;
+            z-index: 0;
+        }
+
+        .feature-card-medium > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card-medium:hover {
+            transform: translateY(-4px);
+            border-color: var(--black);
+        }
+
+        .feature-card-medium .feature-icon {
+            width: 42px;
+            height: 42px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+            backdrop-filter: blur(4px);
+        }
+
+            .feature-card-medium .feature-icon i {
+                font-size: 1.1rem;
+                color: white;
+            }
+
+        .feature-card-medium h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .feature-card-medium p {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        .feature-card-medium .feature-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.7rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            padding-bottom: 2px;
+        }
+
+    /* Subject Selection (Medium) */
+    .feature-card-medium-small {
+        background-size: cover;
+        background-position: center;
+        border-radius: 24px;
+        padding: 18px 20px;
+        border: 1px solid #e8e8e8;
+        transition: all 0.3s ease;
+        position: relative;
+        color: white;
+    }
+
+        .feature-card-medium-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.2) 100%);
+            border-radius: 24px;
+            z-index: 0;
+        }
+
+        .feature-card-medium-small > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card-medium-small:hover {
+            transform: translateY(-3px);
+            border-color: var(--black);
+        }
+
+        .feature-card-medium-small h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 6px;
+        }
+
+        .feature-card-medium-small p {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .feature-card-medium-small .feature-link a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.65rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            padding-bottom: 2px;
+        }
+
+    /* Three Small Cards Row */
+    .small-cards-row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .feature-card-small {
+        flex: 1;
+        background-size: cover;
+        background-position: center;
+        border-radius: 20px;
+        padding: 16px 12px;
+        border: 1px solid #e8e8e8;
+        transition: all 0.3s ease;
+        text-align: center;
+        position: relative;
+        color: white;
+    }
+
+        .feature-card-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.15) 100%);
+            border-radius: 20px;
+            z-index: 0;
+        }
+
+        .feature-card-small > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card-small:hover {
+            transform: translateY(-3px);
+            border-color: var(--black);
+        }
+
+        .feature-card-small .feature-icon-small {
+            width: 36px;
+            height: 36px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            backdrop-filter: blur(4px);
+        }
+
+            .feature-card-small .feature-icon-small i {
+                font-size: 0.9rem;
+                color: white;
+            }
+
+        .feature-card-small h5 {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .feature-card-small p {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .feature-card-small .feature-link a {
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+            padding-bottom: 2px;
+        }
+
+    /* ========== HOW IT WORKS SECTION - FIXED ANIMATION ========== */
+    .howitworks-section {
+        padding: 80px 0;
+        background-color: var(--white);
+    }
+
+    .steps-container {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .step-card-new {
+        flex: 1;
+        min-width: 240px;
+        background-color: var(--sky-blue);
+        border-radius: 28px;
+        padding: 28px 24px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        border: 1px solid rgba(0,0,0,0.05);
+        opacity: 0;
+        transform: translateX(-40px);
+        transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+        .step-card-new.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .step-card-new:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 35px rgba(0,0,0,0.08);
+            border-color: var(--black);
+        }
+
+    /* Circle with Picture and Number at Top Left */
+    .step-circle-wrapper {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .step-number-badge {
+        position: absolute;
+        top: -8px;
+        left: -8px;
+        width: 28px;
+        height: 28px;
+        background: var(--black);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        font-weight: 700;
+        z-index: 2;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .step-circle {
+        width: 80px;
+        height: 80px;
+        background: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        border: 2px solid rgba(0,0,0,0.05);
+        transition: all 0.4s ease;
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    .step-card-new.visible .step-circle {
+        opacity: 1;
+        transform: scale(1);
+        transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) 0.1s;
+    }
+
+    .step-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .step-circle i {
+        font-size: 2.2rem;
+        color: var(--gray-medium);
+    }
+
+    /* Step Content - Appears after circle */
+    .step-content {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .step-card-new.visible .step-content {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+    }
+
+    .step-content h4 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--black);
+        margin-bottom: 12px;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .step-content p {
+        font-size: 0.85rem;
+        color: var(--gray-medium);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    /* Individual delays for staggered appearance */
+    .step-card-new:nth-child(1).visible .step-circle {
+        transition-delay: 0s;
+    }
+
+    .step-card-new:nth-child(1).visible .step-content {
+        transition-delay: 0.25s;
+    }
+
+    .step-card-new:nth-child(2).visible .step-circle {
+        transition-delay: 0.1s;
+    }
+
+    .step-card-new:nth-child(2).visible .step-content {
+        transition-delay: 0.35s;
+    }
+
+    .step-card-new:nth-child(3).visible .step-circle {
+        transition-delay: 0.2s;
+    }
+
+    .step-card-new:nth-child(3).visible .step-content {
+        transition-delay: 0.45s;
+    }
+
+    .step-card-new:nth-child(4).visible .step-circle {
+        transition-delay: 0.3s;
+    }
+
+    .step-card-new:nth-child(4).visible .step-content {
+        transition-delay: 0.55s;
+    }
+
+    @@media (max-width: 992px) {
+        .custom-features-layout {
+            flex-direction: column;
+        }
+
+        .small-cards-row {
+            flex-wrap: wrap;
+        }
+
+        .feature-card-small {
+            min-width: calc(33.33% - 10px);
+        }
+
+        .steps-container {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .step-card-new {
+            width: 100%;
+            max-width: 380px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .small-cards-row {
+            flex-direction: column;
+        }
+
+        .feature-card-large {
+            padding: 24px 20px;
+        }
+
+            .feature-card-large h3 {
+                font-size: 1.4rem;
+            }
+
+        .step-circle {
+            width: 70px;
+            height: 70px;
+        }
+
+            .step-circle i {
+                font-size: 1.8rem;
+            }
+
+        .step-content h4 {
+            font-size: 1rem;
+        }
+
+        .step-content p {
+            font-size: 0.75rem;
+        }
+    }
+
+    /* Section Titles */
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+        color: var(--black);
+    }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--black);
+            border-radius: 2px;
+        }
+
+    .section-title-center::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 60px 0;
+        background-color: var(--white);
+        text-align: center;
+    }
+
+    .cta-card {
+        background-color: var(--gray-lighter);
+        border-radius: 30px;
+        padding: 50px;
+        box-shadow: none;
+        border: 1px solid #e0e0e0;
+    }
+
+        .cta-card h2 {
+            font-size: 1.8rem;
+            color: var(--black);
+        }
+
+    /* Flowing Text Banner */
+    .flowing-banner {
+        overflow: hidden;
+        white-space: nowrap;
+        padding: 30px 0;
+        border-bottom: 1px solid #e0e0e0;
+        border-top: 1px solid #e0e0e0;
+        margin-bottom: 40px;
+        background-color: var(--gray-lighter);
+    }
+
+    .flowing-text {
+        display: inline-block;
+        font-size: 4rem;
+        font-weight: 800;
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 0.05em;
+        color: var(--black);
+        opacity: 0.8;
+        white-space: nowrap;
+        animation: flowRightToLeft 35s linear infinite;
+    }
+
+    @@keyframes flowRightToLeft {
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    /* Footer */
+    .footer {
+        background-color: var(--black);
+        color: var(--white);
+        padding: 60px 0 30px;
+    }
+
+        .footer a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+            .footer a:hover {
+                color: var(--white);
+            }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2rem;
+        }
+
+        .hero {
+            padding: 15px 0 40px;
+        }
+
+        .mission-text {
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+        }
+
+        .cta-card {
+            padding: 30px;
+        }
+
+        .flowing-text {
+            font-size: 2rem;
+        }
+
+        .video-text {
+            font-size: 0.8rem;
+        }
+
+            .video-text span {
+                font-size: 1rem;
+            }
+
+        .hero-video-container {
+            max-width: 100%;
+            margin-top: 30px;
+        }
+
+        .stat-prototype-small {
+            padding: 4px 10px;
+        }
+
+            .stat-prototype-small .stat-text {
+                font-size: 0.6rem;
+            }
+
+            .stat-prototype-small .stat-number {
+                font-size: 0.65rem;
+            }
+
+        .plus-btn-small {
+            width: 24px;
+            height: 24px;
+        }
+
+            .plus-btn-small i {
+                font-size: 0.7rem;
+            }
+
+        .stat-card-custom {
+            padding: 20px 16px;
+        }
+
+        .stat-title {
+            font-size: 1.1rem;
+        }
+
+        .stat-description {
+            font-size: 0.75rem;
+        }
+
+        .image-title {
+            font-size: 1.1rem;
+        }
+
+        .image-text {
+            font-size: 0.7rem;
+        }
+    }
+
+    /* Word styles for animation */
+    .word {
+        display: inline-block;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+        .word.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    /* Smooth AOS animations */
+    [data-aos] {
+        transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    [data-aos="fade-right"] {
+        transform: translateX(-30px);
+    }
+
+    [data-aos="fade-left"] {
+        transform: translateX(30px);
+    }
+
+    [data-aos="fade-up"] {
+        transform: translateY(30px);
+    }
+
+    /* Stagger animations look smooth */
+    .aos-animate {
+        opacity: 1 !important;
+    }
+
+</style>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">PremiumForLearners</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                <li class="nav-item"><a class="nav-link" href="#howitworks">How It Works</a></li>
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <li class="nav-item"><a class="nav-link" href="/Parent/Dashboard">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Account/Logout">Logout</a></li>
+                }
+                else
+                {
+                    <li class="nav-item"><a class="nav-link" href="/Account/Register">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Account/Login">Login</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 hero-content">
+                <div class="word-wrapper" id="heroHeadingWrapper">
+                    <h1 id="heroHeading">
+                        <span class="light-text">Smart School Registration,</span>
+                        <span class="highlight">Made Simple</span>
+                    </h1>
+                </div>
+                <div class="word-wrapper" id="heroSubtitleWrapper">
+                    <p id="heroSubtitle" class="hero-subtitle">Register your children, select subjects, and track applications - all from one secure platform.</p>
+                </div>
+                <div class="d-flex gap-3">
+                    <a href="/Account/Register" class="btn-primary-custom">Get Started</a>
+                    <a href="#features" class="btn-outline-custom">Learn More</a>
+                </div>
+            </div>
+            <div class="col-lg-7 text-center">
+                <div class="hero-video-container" data-aos="fade-left" data-aos-duration="800">
+                    <div class="video-buttons-overlay">
+                        <div class="prototype-row">
+                            <div class="stat-prototype-small">
+                                <span class="stat-text">Registered Schools in SA</span>
+                                <span class="stat-number">26,000+</span>
+                            </div>
+                            <a href="https://www.education.gov.za/" target="_blank" class="plus-btn-small">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                        <div class="prototype-row">
+                            <div class="stat-prototype-small">
+                                <span class="stat-text">Learners in South Africa</span>
+                                <span class="stat-number">13.5M+</span>
+                            </div>
+                            <a href="https://www.dbe.gov.za/" target="_blank" class="plus-btn-small">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <video autoplay muted loop playsinline class="hero-video">
+                        <source src="/videos/backpack-kid.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="video-overlay">
+                        <p class="video-text">
+                            <br>
+                            New beginnings, deep breaths,<br>
+                            and endless possibilities.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Statement Section -->
+<section class="mission-section">
+    <div class="container">
+        <div class="word-wrapper" id="missionTextWrapper">
+            <p id="missionText" class="mission-text">
+                <span class="mission-keyword">Empowering</span> <span class="mission-light">every South African child with</span> <span class="mission-keyword">seamless access</span> <span class="mission-light">to quality education through</span> <span class="mission-keyword">digital innovation</span> <span class="mission-light">and</span> <span class="mission-keyword">parental engagement</span>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section" id="statsSection">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card-custom royal-blue" data-card="1">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-globe-africa"></i>
+                    </div>
+                    <h3 class="stat-title">Nation's Educational System</h3>
+                    <p class="stat-description">Proudly launching our platform to serve South Africa's future leaders. Smart registration for every child, everywhere. A unified digital platform connecting parents, schools, and the Department of Education.</p>
+                    <div class="stat-badge">
+                        <span>🇿🇦 Nationwide Initiative</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card-custom image-card" style="background-image: url('/images/Parentandson.jpeg');" data-card="2">
+                    <div class="image-overlay-dark"></div>
+                    <div class="image-card-content">
+                        <h3 class="image-title">Join the Movement</h3>
+                        <p class="image-text">Be part of South Africa's digital education revolution</p>
+                        <a href="/Account/Register" class="btn-white-outline">Learn More →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card-custom teal-bg" data-card="3">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="stat-title">Shaping the Nation's Future</h3>
+                    <p class="stat-description large">Every child deserves access to quality education. Our platform bridges the gap between parents and schools, making registration seamless and accessible for all South African families.</p>
+                    <div class="stat-badge">
+                        <span>✨ Building Tomorrow</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="stat-card-custom image-card" style="background-image: url('/images/Hatandbooks.JPG');" data-card="4">
+                    <div class="image-overlay-dark"></div>
+                    <div class="image-card-content">
+                        <h3 class="image-title">Support Education</h3>
+                        <p class="image-text">Help us reach more schools and students across the nation</p>
+                        <a href="/Account/Register" class="btn-white-outline">Get Involved →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+Section -->
+<section class="feature-section" id="features">
+    <div class="container">
+        <div class="text-center mb-4">
+            <div class="word-wrapper" id="featuresTitleWrapper">
+                <h2 id="featuresTitle" class="section-title section-title-center">Everything You Need</h2>
+            </div>
+            <div class="word-wrapper" id="featuresSubtitleWrapper">
+                <p id="featuresSubtitle" class="text-muted mt-2">A complete platform for modern parents and schools</p>
+            </div>
+        </div>
+
+        <div class="custom-features-layout">
+            <!-- LEFT SIDE - Easy Registration -->
+            <div class="feature-left-large">
+                <div class="feature-card-large" style="background-image: url('/images/EDU.JPG');">
+                    <h3>Easy Registration</h3>
+                    <p>Register your children in minutes. No paper forms, no long queues. Everything is digital, secure, and accessible from anywhere.</p>
+                    <div class="feature-link">
+                        <a href="/Account/Register">Get started <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="feature-right-side">
+                <!-- School Transfers -->
+                <div class="feature-card-medium" style="background-image: url('/images/KidAtLibraryw.jpeg');">
+                    <div class="feature-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h4>School Transfers</h4>
+                    <p>Seamless transfers with automatic academic record tracking between schools.</p>
+                    <div class="feature-link">
+                        <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Subject Selection -->
+                <div class="feature-card-medium-small" style="background-image: url('/images/Books.jpeg');">
+                    <h4>Subject Selection</h4>
+                    <p>Grade 10-12 students choose subjects online with prerequisite checks.</p>
+                    <div class="feature-link">
+                        <a href="#">Learn more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Three Small Cards Row -->
+                <div class="small-cards-row">
+                    <div class="feature-card-small" style="background-image: url('/images/document-vault-bg.jpg');">
+                        <div class="feature-icon-small">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h5>Document Vault</h5>
+                        <p>Secure storage for certificates</p>
+                        <div class="feature-link">
+                            <a href="#">Learn →</a>
+                        </div>
+                    </div>
+                    <div class="feature-card-small" style="background-image: url('/images/progress-tracking-bg.jpg');">
+                        <div class="feature-icon-small">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h5>Progress Tracking</h5>
+                        <p>Track grades & attendance</p>
+                        <div class="feature-link">
+                            <a href="#">Learn →</a>
+                        </div>
+                    </div>
+                    <div class="feature-card-small" style="background-image: url('/images/notifications-bg.jpg');">
+                        <div class="feature-icon-small">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h5>Instant Notifications</h5>
+                        <p>Real-time updates & alerts</p>
+                        <div class="feature-link">
+                            <a href="#">Learn →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- How It Works Section - FIXED -->
+<section class="howitworks-section" id="howitworks">
+    <div class="container">
+        <div class="text-center mb-4">
+            <div class="word-wrapper" id="howItWorksTitleWrapper">
+                <h2 id="howItWorksTitle" class="section-title section-title-center">How It Works</h2>
+            </div>
+            <div class="word-wrapper" id="howItWorksSubtitleWrapper">
+                <p id="howItWorksSubtitle" class="text-muted mt-2">Simple steps to get your child registered</p>
+            </div>
+        </div>
+
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step-card-new" data-step="1">
+                <div class="step-circle-wrapper">
+                    <div class="step-number-badge">1</div>
+                    <div class="step-circle">
+                        <img src="/images/step1-account.jpg" alt="Create Account" onerror="this.src='https://via.placeholder.com/80x80?text=📝'">
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h4>Create Your Account</h4>
+                    <p>Sign up as a parent in minutes. Provide your basic information and verify your email to get started. It's completely free and gives you access to all features.</p>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card-new" data-step="2">
+                <div class="step-circle-wrapper">
+                    <div class="step-number-badge">2</div>
+                    <div class="step-circle">
+                        <img src="/images/step2-child.jpg" alt="Add Child" onerror="this.src='https://via.placeholder.com/80x80?text=👶'">
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h4>Add Your Child</h4>
+                    <p>Enter your child's details including full name, date of birth, and grade. Upload important documents like birth certificates and previous report cards. All documents are securely stored.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card-new" data-step="3">
+                <div class="step-circle-wrapper">
+                    <div class="step-number-badge">3</div>
+                    <div class="step-circle">
+                        <img src="/images/step3-subjects.jpg" alt="Choose Subjects" onerror="this.src='https://via.placeholder.com/80x80?text=📚'">
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h4>Choose Subjects</h4>
+                    <p>For Grade 10-12 students, select your preferred subjects online. The system checks prerequisites and shows available options. Get career guidance based on your subject choices.</p>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card-new" data-step="4">
+                <div class="step-circle-wrapper">
+                    <div class="step-number-badge">4</div>
+                    <div class="step-circle">
+                        <img src="/images/step4-track.jpg" alt="Submit & Track" onerror="this.src='https://via.placeholder.com/80x80?text=📊'">
+                    </div>
+                </div>
+                <div class="step-content">
+                    <h4>Submit & Track</h4>
+                    <p>Review all information, submit your application, and track its progress in real-time. Receive notifications when your application is approved or if any additional documents are needed.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-card">
+            <div class="word-wrapper" id="ctaHeadingWrapper">
+                <h2 id="ctaHeading">Ready to Get Started?</h2>
+            </div>
+            <div class="word-wrapper" id="ctaSubtitleWrapper">
+                <p id="ctaSubtitle" class="text-muted mb-3">Join thousands of parents who have simplified school registration</p>
+            </div>
+            <a href="/Account/Register" class="btn-primary-custom">Register Now</a>
+        </div>
+    </div>
+</section>
+<style>
+    /* ========== CONTACT & FOOTER STYLES ========== */
+    :root {
+        --primary-blue: #1e3a8a;
+        --secondary-blue: #2563eb;
+        --teal: #0f766e;
+        --teal-light: #14b8a6;
+        --cool-grey: #64748b;
+        --light-grey: #94a3b8;
+        --soft-grey: #e2e8f0;
+        --dark-grey: #334155;
+        --white: #ffffff;
+        --black: #0f172a;
+        --bg-dark: #0f172a;
+    }
+
+    /* Contact icons */
+    .contact-icon-wrapper {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, rgba(15, 118, 110, 0.1), rgba(20, 184, 166, 0.1));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        color: var(--teal);
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+    }
+
+    .contact-item {
+        transition: all 0.3s ease;
+    }
+
+        .contact-item:hover .contact-icon-wrapper {
+            background: linear-gradient(135deg, var(--teal), var(--teal-light));
+            color: white;
+            transform: scale(1.1);
+        }
+
+    /* Modern Cards */
+    .card-modern {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0,0,0,0.05);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+        .card-modern:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 30px 60px rgba(15, 118, 110, 0.2);
+            border-color: var(--teal);
+        }
+
+    /* Section Titles */
+    .section-title-modern {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--teal);
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+
+        .section-title-modern::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--teal), var(--teal-light));
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+    /* Buttons */
+    .btn-modern {
+        background: linear-gradient(135deg, var(--teal), var(--teal-light));
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        margin-top: auto;
+        font-size: 0.95rem;
+    }
+
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--teal-light), var(--teal));
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-modern:hover::before {
+            left: 0;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15, 118, 110, 0.4);
+            color: white;
+        }
+
+    /* Form Controls */
+    .form-control-lg, .form-select-lg {
+        border: 2px solid var(--soft-grey);
+        border-radius: 15px;
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+        .form-control-lg:focus, .form-select-lg:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.1);
+            outline: none;
+        }
+
+    /* Footer */
+    .bg-dark {
+        background-color: var(--bg-dark);
+    }
+
+    .bg-teal-dark {
+        background: linear-gradient(135deg, #0a4c46, var(--teal));
+    }
+
+    footer a {
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+
+        footer a:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: var(--teal-light) !important;
+        }
+
+    .text-secondary {
+        color: var(--cool-grey) !important;
+    }
+
+    .text-teal {
+        color: var(--teal) !important;
+    }
+
+    .rounded-4 {
+        border-radius: 1rem !important;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12) !important;
+    }
+
+    .bg-white {
+        background-color: white !important;
+    }
+
+    .py-5 {
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .py-4 {
+        padding-top: 1.5rem !important;
+        padding-bottom: 1.5rem !important;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .mb-3 {
+        margin-bottom: 1rem !important;
+    }
+
+    .mb-0 {
+        margin-bottom: 0 !important;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem !important;
+    }
+
+    .me-3 {
+        margin-right: 1rem !important;
+    }
+
+    .mt-2 {
+        margin-top: 0.5rem !important;
+    }
+
+    .fs-4 {
+        font-size: 1.5rem !important;
+    }
+
+    .fs-5 {
+        font-size: 1.25rem !important;
+    }
+
+    .w-100 {
+        width: 100% !important;
+    }
+
+    .text-md-end {
+        text-align: right !important;
+    }
+
+    .d-flex {
+        display: flex !important;
+    }
+
+    .align-items-center {
+        align-items: center !important;
+    }
+
+    .flex-wrap {
+        flex-wrap: wrap !important;
+    }
+
+    .text-white {
+        color: white !important;
+    }
+</style>
+
+<!-- ========== CONTACT SECTION ========== -->
+<section class="py-5" id="contact">
+    <div class="container">
+        <div class="row">
+            <!-- Left Column - Contact Info -->
+            <div class="col-lg-6" data-aos="fade-right" data-aos-duration="1000">
+                <h2 class="section-title-modern mb-4">Ready to Enroll?</h2>
+                <p class="fs-5 text-secondary mb-4">Start your child's educational journey today. Limited spaces available for the 2026 academic year.</p>
+
+                <!-- Phone -->
+                <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4 shadow-sm contact-item" data-aos="fade-left" data-aos-delay="200">
+                    <div class="contact-icon-wrapper me-3">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary"><i class="fas fa-clock me-1"></i> Call us anytime</small>
+                        <h5 class="mb-0"><i class="fas fa-phone-alt me-2 text-teal"></i>071 245 9929</h5>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4 shadow-sm contact-item" data-aos="fade-left" data-aos-delay="400">
+                    <div class="contact-icon-wrapper me-3">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary"><i class="fas fa-clock me-1"></i> Email us</small>
+                        <h5 class="mb-0"><i class="fas fa-envelope me-2 text-teal"></i>info@premiumlearners.co.za</h5>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="d-flex align-items-center mb-3 p-3 bg-white rounded-4 shadow-sm contact-item" data-aos="fade-left" data-aos-delay="600">
+                    <div class="contact-icon-wrapper me-3">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <small class="text-secondary"><i class="fas fa-globe me-1"></i> Visit us</small>
+                        <h5 class="mb-0"><i class="fas fa-map-pin me-2 text-teal"></i>Durban, South Africa</h5>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column - Demo Video -->
+            <div class="col-lg-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                <div class="card-modern p-4">
+                    <h3 class="h4 mb-4"><i class="fas fa-video me-2 text-teal"></i>Watch How It Works</h3>
+                    <div class="video-container">
+                        <video controls width="100%" style="border-radius: 15px;">
+                            <source src="~/videos/premiumlearners-demo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <p class="text-secondary mt-3 text-center small">Watch this quick demo to see how easy registration works</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== FOOTER SECTION ========== -->
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" data-aos="fade-right">
+                <h5 class="text-white"><i class="fas fa-graduation-cap me-2 text-teal"></i>PremiumForLearners</h5>
+                <p class="text-secondary"><i class="fas fa-map-marker-alt me-2 text-teal"></i>Smart school registration platform for modern parents and schools. Making education enrollment simple and efficient.</p>
+            </div>
+            <div class="col-md-6 text-md-end" data-aos="fade-left">
+                <p class="mb-0"><i class="far fa-copyright me-1"></i>2026 PremiumForLearners. All rights reserved.</p>
+                <div class="mt-2">
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-x-twitter"></i></a>
+                    <a href="#" class="text-white fs-4"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- AOS Animation Library -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Initialize AOS animations
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true,
+        offset: 50,
+        easing: 'ease-in-out'
+    });
+</script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        once: false,
+        mirror: true,
+        offset: 50,
+        easing: 'ease-in-out'
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Navbar background change on scroll
+    window.addEventListener('scroll', function() {
+        const navbar = document.querySelector('.navbar-modern');
+        if (window.scrollY > 50) {
+            navbar.style.background = 'linear-gradient(135deg, #0f2b5e, #1e3a8a)';
+            navbar.style.boxShadow = '0 4px 30px rgba(0,0,0,0.2)';
+        } else {
+            navbar.style.background = 'linear-gradient(135deg, var(--primary-blue), var(--secondary-blue))';
+            navbar.style.boxShadow = '0 4px 20px rgba(30, 58, 138, 0.2)';
+        }
+    });
+
+    // Add loading animation
+    window.addEventListener('load', function() {
+        document.body.style.opacity = '1';
+    });
+</script>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.js"></script>
+
+<script>
+
+       // Initialize AOS with enhanced settings
+    AOS.init({
+        duration: 1000,           // Animation duration (ms)
+        once: false,              // Animate every time you scroll
+        mirror: true,             // Animate when scrolling back up
+        offset: 50,               // Start offset before element enters viewport (px)
+        easing: 'ease-out-cubic', // Smooth easing function
+        delay: 0,                 // Default delay (overridden by data-aos-delay)
+        disable: false,           // Never disable
+        startEvent: 'DOMContentLoaded',
+        initClassName: 'aos-init',
+        animatedClassName: 'aos-animate',
+        useClassNames: false,
+        throttleDelay: 99,
+        debounceDelay: 50
+    });
+
+    AOS.init({ duration: 1000, once: true });
+    gsap.registerPlugin(ScrollTrigger);
+
+    function animateTextWordByWord(elementId, triggerSelector, isMissionText = false) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        if (isMissionText) {
+            const spans = element.querySelectorAll('span');
+            const wordSpans = Array.from(spans);
+            wordSpans.forEach(span => {
+                span.style.opacity = '0';
+                span.style.transform = 'translateY(30px)';
+                span.style.display = 'inline-block';
+                span.style.transition = 'all 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1)';
+            });
+            ScrollTrigger.create({
+                trigger: triggerSelector,
+                start: "top 80%",
+                onEnter: () => {
+                    wordSpans.forEach((span, i) => {
+                        gsap.to(span, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            delay: i * 0.12,
+                            ease: "power2.out",
+                            overwrite: true
+                        });
+                    });
+                },
+                once: true
+            });
+            return;
+        }
+
+        const text = element.innerText;
+        const words = text.split(/\s+/);
+        element.innerHTML = '';
+        words.forEach((word, index) => {
+            const span = document.createElement('span');
+            span.className = 'word';
+            span.innerText = word;
+            span.style.opacity = '0';
+            span.style.transform = 'translateY(30px)';
+            span.style.display = 'inline-block';
+            element.appendChild(span);
+            if (index < words.length - 1) {
+                element.appendChild(document.createTextNode(' '));
+            }
+        });
+        const wordSpans = element.querySelectorAll('.word');
+        ScrollTrigger.create({
+            trigger: triggerSelector,
+            start: "top 80%",
+            onEnter: () => {
+                wordSpans.forEach((span, i) => {
+                    gsap.to(span, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.6,
+                        delay: i * 0.12,
+                        ease: "power2.out",
+                        overwrite: true
+                    });
+                });
+            },
+            once: true
+        });
+    }
+
+    animateTextWordByWord("heroHeading", ".hero");
+    animateTextWordByWord("heroSubtitle", ".hero");
+    animateTextWordByWord("featuresTitle", "#features");
+    animateTextWordByWord("featuresSubtitle", "#features");
+    animateTextWordByWord("howItWorksTitle", "#howitworks");
+    animateTextWordByWord("howItWorksSubtitle", "#howitworks");
+    animateTextWordByWord("ctaHeading", ".cta-section");
+    animateTextWordByWord("ctaSubtitle", ".cta-section");
+    animateTextWordByWord("footerLogo", ".footer");
+    animateTextWordByWord("footerDesc", ".footer");
+    animateTextWordByWord("footerNavTitle", ".footer");
+    animateTextWordByWord("footerNav1", ".footer");
+    animateTextWordByWord("footerNav2", ".footer");
+    animateTextWordByWord("footerNav3", ".footer");
+    animateTextWordByWord("footerResourcesTitle", ".footer");
+    animateTextWordByWord("footerRes1", ".footer");
+    animateTextWordByWord("footerRes2", ".footer");
+    animateTextWordByWord("footerRes3", ".footer");
+    animateTextWordByWord("footerContactTitle", ".footer");
+    animateTextWordByWord("footerEmail", ".footer");
+    animateTextWordByWord("footerSocial", ".footer");
+    animateTextWordByWord("footerCopyright", ".footer");
+    animateTextWordByWord("missionText", ".mission-section", true);
+
+    function animateStats() {
+        new countUp.CountUp('statSchools', 150).start();
+        new countUp.CountUp('statStudents', 1250).start();
+        new countUp.CountUp('statSubjects', 45).start();
+        new countUp.CountUp('statParents', 890).start();
+    }
+    ScrollTrigger.create({ trigger: '.stats-section', start: 'top 80%', onEnter: animateStats, once: true });
+
+    const cards = document.querySelectorAll('.stat-card-custom');
+    const statsSection = document.getElementById('statsSection');
+    if (cards.length > 0 && statsSection) {
+        let animationStarted = false;
+        ScrollTrigger.create({
+            trigger: statsSection,
+            start: "top 70%",
+            onEnter: () => {
+                if (!animationStarted) {
+                    animationStarted = true;
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('animate-in');
+                        }, index * 500);
+                    });
+                }
+            },
+            once: true
+        });
+    }
+
+     
+
+    // Animate feature cards on scroll
+    gsap.utils.toArray('.feature-card-large, .feature-card-medium, .feature-card-medium-small, .feature-card-small').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: { trigger: card, start: 'top 75%', toggleActions: 'play none none reverse' },
+            y: 40, opacity: 0, duration: 0.5, delay: i * 0.08, ease: 'power2.out'
+        });
+    });
+
+    // ========== HOW IT WORKS SECTION - SLIDE IN ON SCROLL ==========
+    const stepCards = document.querySelectorAll('.step-card-new');
+    const howItWorksSection = document.getElementById('howitworks');
+
+    if (stepCards.length > 0 && howItWorksSection) {
+        let animationStarted = false;
+
+        ScrollTrigger.create({
+            trigger: howItWorksSection,
+            start: "top 75%",
+            onEnter: () => {
+                if (!animationStarted) {
+                    animationStarted = true;
+                    stepCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, index * 150);
+                    });
+                }
+            },
+            once: true
+        });
+    }
+</script>

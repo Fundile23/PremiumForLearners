@@ -1,0 +1,437 @@
+﻿@model PremiumForLearners.Models.Student
+
+@{
+    ViewData["Title"] = Model.FullName;
+    bool isGradeValid = int.TryParse(Model.ApplyingGrade, out int gradeNum);
+    bool isHighSchool = isGradeValid && gradeNum >= 10 && gradeNum <= 12;
+}
+
+<!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- AOS Animation -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+    :root {
+        --black: #000000;
+        --white: #ffffff;
+        --gray-lighter: #f5f5f5;
+        --gray-text: #6b6b6b;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--white);
+        color: var(--gray-text);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+        color: var(--black);
+    }
+
+    .navbar {
+        background-color: var(--white) !important;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .navbar-brand {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: var(--black) !important;
+        font-size: 1.8rem;
+    }
+
+    .nav-link {
+        color: #2c2c2c !important;
+        font-weight: 500;
+        margin: 0 15px;
+    }
+
+    .student-hero {
+        padding: 40px 0 30px;
+        background: linear-gradient(135deg, var(--gray-lighter) 0%, var(--white) 100%);
+        margin-bottom: 40px;
+        border-radius: 24px;
+    }
+
+    .student-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        background: var(--black);
+        color: white;
+        border-radius: 40px;
+        font-size: 0.75rem;
+        margin-bottom: 15px;
+    }
+
+    .card-modern {
+        background: var(--white);
+        border-radius: 20px;
+        border: 1px solid #e8e8e8;
+        overflow: hidden;
+        margin-bottom: 24px;
+    }
+
+    .card-header-modern {
+        background: var(--gray-lighter);
+        padding: 16px 20px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+        .card-header-modern h5 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .status-badge-large {
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+    }
+
+    .verification-item {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 12px 16px;
+        margin-bottom: 10px;
+    }
+
+    .footer {
+        background-color: var(--black);
+        color: var(--white);
+        padding: 40px 0 30px;
+        margin-top: 60px;
+    }
+</style>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">PremiumForLearners</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="/Parent/Dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Parent/Notifications">Notifications</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Parent/Announcements">Announcements</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Account/Logout">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="margin-top: 80px;">
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <!-- Student Hero -->
+    <div class="student-hero" data-aos="fade-up">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div>
+                <div class="student-badge">Student Profile</div>
+                <h2 class="fw-bold">@Model.FullName</h2>
+                <p class="text-muted mb-0">Grade @Model.ApplyingGrade • Age @Model.Age</p>
+            </div>
+            <div>
+                <span class="status-badge-large @(Model.ApplicationStatus == "Enrolled" ? "bg-success text-white" :
+                                          Model.ApplicationStatus == "Approved" ? "bg-info text-white" :
+                                          Model.ApplicationStatus == "Submitted" ? "bg-warning text-dark" :
+                                          Model.ApplicationStatus == "Rejected" ? "bg-danger text-white" : "bg-secondary text-white")">
+                    Status: @Model.ApplicationStatus
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left Column -->
+        <div class="col-md-4 mb-4">
+            <div class="card-modern">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-user-graduate me-2"></i>Student Information</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div style="padding: 16px;">
+                        <div class="info-row"><span class="fw-bold">Date of Birth:</span> <span>@Model.DateOfBirth.ToString("dd MMM yyyy")</span></div>
+                        <div class="info-row"><span class="fw-bold">Birth Cert #:</span> <span>@Model.BirthCertificateNumber</span></div>
+                        <div class="info-row"><span class="fw-bold">Home Language:</span> <span>@Model.HomeLanguage</span></div>
+                        <div class="info-row"><span class="fw-bold">Previous School:</span> <span>@(Model.PreviousSchool ?? "None")</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-modern">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="d-grid gap-2">
+                        @if (Model.ApplicationStatus == "Draft")
+                        {
+                            <form asp-action="SubmitApplication" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@Model.Id" />
+                                <button type="submit" class="btn btn-success w-100" style="border-radius: 40px;">
+                                    <i class="fas fa-paper-plane me-2"></i>Submit Application
+                                </button>
+                            </form>
+                        }
+                        @if (isHighSchool)
+                        {
+                            <a asp-controller="Parent" asp-action="SubjectSelection" asp-route-id="@Model.Id" class="btn btn-outline-primary" style="border-radius: 40px;">
+                                <i class="fas fa-book-open me-2"></i>Select Subjects
+                            </a>
+                        }
+                        <a href="/Parent/TransferRequest/@Model.Id" class="btn btn-outline-primary" style="border-radius: 40px;">
+                            <i class="fas fa-exchange-alt me-2"></i>Request Transfer
+                        </a>
+                        <a href="/Parent/UploadDocument/@Model.Id" class="btn btn-outline-primary" style="border-radius: 40px;">
+                            <i class="fas fa-upload me-2"></i>Upload Document
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Middle Column -->
+        <div class="col-md-8 mb-4">
+            @if (isHighSchool)
+            {
+                <div class="card-modern">
+                    <div class="card-header-modern">
+                        <h5><i class="fas fa-book me-2"></i>Subject Selection</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        @if (Model.SubjectSelections != null && Model.SubjectSelections.Any())
+                        {
+                            var latest = Model.SubjectSelections.OrderByDescending(s => s.SelectionDate).First();
+                            string statusClass = latest.Status == "Approved" ? "bg-success" :
+                            latest.Status == "Submitted" ? "bg-warning" :
+                            latest.Status == "Rejected" ? "bg-danger" : "bg-secondary";
+
+                            <div class="alert alert-info rounded-3">
+                                <strong>Status:</strong>
+                                <span class="badge @statusClass ms-2" style="border-radius: 40px;">@latest.Status</span>
+                            </div>
+
+                            <p><strong>Core Subjects:</strong> @latest.CoreSubjects</p>
+                            <p><strong>Elective Subjects:</strong></p>
+                            <ul>
+                                @if (!string.IsNullOrEmpty(latest.Elective1))
+                                {
+                                    <li>@latest.Elective1</li>
+                                }
+                                @if (!string.IsNullOrEmpty(latest.Elective2))
+                                {
+                                    <li>@latest.Elective2</li>
+                                }
+                                @if (!string.IsNullOrEmpty(latest.Elective3))
+                                {
+                                    <li>@latest.Elective3</li>
+                                }
+                                @if (!string.IsNullOrEmpty(latest.Elective4))
+                                {
+                                    <li>@latest.Elective4</li>
+                                }
+                            </ul>
+                            <p class="text-muted small">Selection Date: @latest.SelectionDate.ToString("dd MMM yyyy")</p>
+
+                            @if (latest.Status == "Rejected")
+                            {
+                                <a asp-action="SubjectSelection" asp-route-id="@Model.Id" class="btn btn-warning" style="border-radius: 40px;">Resubmit Subject Selection</a>
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning rounded-3">
+                                <i class="fas fa-exclamation-triangle me-2"></i> No subject selection has been made yet.
+                                @if (Model.ApplicationStatus == "Submitted" || Model.ApplicationStatus == "Enrolled" || Model.ApplicationStatus == "PaymentVerified")
+                                {
+                                    <div class="mt-2">
+                                        <a asp-action="SubjectSelection" asp-route-id="@Model.Id" class="btn btn-primary" style="border-radius: 40px;">Select Subjects Now</a>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            <div class="card-modern">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-clipboard-list me-2"></i>Enrollment Status</h5>
+                </div>
+                <div class="card-body p-4">
+                    @{
+                        var subjectsRequirementMet = isHighSchool ? Model.SubjectsVerified : true;
+                        var allVerified = Model.DocumentsVerified && subjectsRequirementMet && Model.PaymentVerified;
+                        var canEnroll = allVerified && Model.ApplicationStatus != "Enrolled";
+                    }
+
+                    <div class="verification-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-file-alt me-2"></i>Documents:</span>
+                        <span class="badge @(Model.DocumentsVerified ? "bg-success" : "bg-warning")" style="border-radius: 40px; padding: 6px 16px;">
+                            @(Model.DocumentsVerified ? "Verified ✓" : "Pending")
+                        </span>
+                    </div>
+
+                    @if (isHighSchool)
+                    {
+                        <div class="verification-item d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-book me-2"></i>Subjects:</span>
+                            <span class="badge @(Model.SubjectsVerified ? "bg-success" : "bg-warning")" style="border-radius: 40px; padding: 6px 16px;">
+                                @(Model.SubjectsVerified ? "Verified ✓" : "Pending")
+                            </span>
+                        </div>
+                    }
+
+                    <div class="verification-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-credit-card me-2"></i>Payment:</span>
+                        <span class="badge @(Model.PaymentVerified ? "bg-success" : "bg-warning")" style="border-radius: 40px; padding: 6px 16px;">
+                            @(Model.PaymentVerified ? "Verified ✓" : "Pending")
+                        </span>
+                    </div>
+
+                    @if (canEnroll)
+                    {
+                        <div class="alert alert-success mt-4 rounded-3">
+                            <strong>🎉 All requirements completed!</strong><br>
+                            Your child is ready to be enrolled.
+                        </div>
+                        <a href="@Url.Action("ConfirmEnrollment", "Parent", new { id = Model.Id })"
+                           class="btn btn-success w-100 mt-2" style="border-radius: 40px; padding: 12px;"
+                           onclick="return confirm('Confirm enrollment for @Model.FullName?')">
+                            <i class="fas fa-check-circle me-2"></i>Confirm Enrollment
+                        </a>
+                    }
+                    else if (Model.ApplicationStatus == "Enrolled")
+                    {
+                        <div class="alert alert-success text-center mt-4 rounded-3">
+                            <i class="fas fa-graduation-cap me-2"></i>
+                            <strong>Enrollment Confirmed!</strong><br>
+                            Enrolled on @Model.EnrollmentConfirmedAt?.ToString("dd MMM yyyy")
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info mt-4 rounded-3">
+                            <strong>⏳ Enrollment Pending</strong>
+                            <ul class="mt-2 mb-0">
+                                @if (!Model.DocumentsVerified)
+                                {
+                                    <li>📄 Upload and verify all documents</li>
+                                }
+                                @if (isHighSchool && !Model.SubjectsVerified)
+                                {
+                                    <li>📚 Subject selection needs admin verification</li>
+                                }
+                                @if (!Model.PaymentVerified)
+                                {
+                                    <li>💰 Registration fee payment verification pending</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="card-modern">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-exchange-alt me-2"></i>Transfer Requests</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.TransferRequests.Any())
+                    {
+                        foreach (var transfer in Model.TransferRequests)
+                        {
+                            <div class="border-bottom pb-3 mb-3">
+                                <p class="mb-1"><strong>To:</strong> @transfer.ToSchool</p>
+                                <p class="mb-1"><strong>Status:</strong> <span class="badge bg-warning" style="border-radius: 40px;">@transfer.Status</span></p>
+                                <small class="text-muted">@transfer.RequestDate.ToString("dd MMM yyyy")</small>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-3 mb-0">No transfer requests.</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="col-md-4 mb-4">
+            <div class="card-modern">
+                <div class="card-header-modern">
+                    <h5><i class="fas fa-folder-open me-2"></i>Documents</h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (Model.Documents.Any())
+                    {
+                        foreach (var doc in Model.Documents)
+                        {
+                            <div class="border-bottom pb-3 mb-3">
+                                <p class="mb-1 fw-semibold">@doc.DocumentType</p>
+                                <p class="small text-muted mb-1">@doc.FileName</p>
+                                <span class="badge @(doc.VerificationStatus == "Verified" ? "bg-success" : "bg-warning")" style="border-radius: 40px; padding: 4px 12px;">
+                                    @doc.VerificationStatus
+                                </span>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-muted text-center py-3 mb-0">No documents uploaded.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-12">
+            <a href="/Parent/Dashboard" class="btn btn-outline-secondary" style="border-radius: 40px; padding: 10px 24px;">
+                <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="text-center">
+            <p>&copy; @DateTime.Now.Year PremiumForLearners. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ duration: 1000, once: true });
+</script>

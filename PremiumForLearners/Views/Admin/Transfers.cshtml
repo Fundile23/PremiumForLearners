@@ -1,0 +1,51 @@
+﻿@model List<PremiumForLearners.Models.TransferRequest>
+
+@{
+    ViewData["Title"] = "Transfer Requests";
+}
+
+<div class="container">
+    <h2 class="mb-4">Transfer Requests</h2>
+
+    <div class="card p-4">
+        @if (Model.Any())
+        {
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>From School</th>
+                            <th>To School</th>
+                            <th>Reason</th>
+                            <th>Requested</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var transfer in Model)
+                        {
+                            <tr>
+                                <td>@transfer.Student?.FullName</td>
+                                <td>@transfer.FromSchool</td>
+                                <td>@transfer.ToSchool</td>
+                                <td>@transfer.Reason</td>
+                                <td>@transfer.RequestDate.ToString("dd MMM yyyy")</td>
+                                <td>
+                                    <form asp-action="ApproveTransfer" method="post" class="d-inline">
+                                        <input type="hidden" name="transferId" value="@transfer.Id" />
+                                        <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this transfer?')">Approve</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">No pending transfer requests.</p>
+        }
+    </div>
+</div>

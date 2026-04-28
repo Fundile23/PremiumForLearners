@@ -1,0 +1,107 @@
+﻿@model PremiumForLearners.Models.Announcement
+
+@{
+    ViewData["Title"] = "Create Announcement - Admin";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-0 pt-4">
+                    <div class="d-flex align-items-center">
+                        <a href="/Admin/Announcements" class="btn btn-link text-decoration-none me-3">
+                            <i class="fas fa-arrow-left"></i> Back
+                        </a>
+                        <h2 class="mb-0">
+                            <i class="fas fa-plus-circle me-2"></i>Create Announcement
+                        </h2>
+                    </div>
+                    <p class="text-muted mt-2">Create a new announcement for parents, students, or staff</p>
+                </div>
+                <div class="card-body">
+                    <form asp-action="CreateAnnouncement" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label fw-bold">
+                                <i class="fas fa-heading me-1"></i> Title
+                            </label>
+                            <input asp-for="Title" class="form-control form-control-lg" placeholder="Enter announcement title" required />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Content" class="form-label fw-bold">
+                                <i class="fas fa-align-left me-1"></i> Content
+                            </label>
+                            <textarea asp-for="Content" class="form-control" rows="6" placeholder="Write your announcement here..." required></textarea>
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                            <small class="text-muted">You can use plain text or HTML formatting.</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="TargetAudience" class="form-label fw-bold">
+                                    <i class="fas fa-users me-1"></i> Target Audience
+                                </label>
+                                <select asp-for="TargetAudience" class="form-select">
+                                    <option value="All">👥 All (Parents, Students & Staff)</option>
+                                    <option value="Parents">👪 Parents Only</option>
+                                    <option value="Students">🎓 Students Only</option>
+                                    <option value="Staff">👔 Staff Only</option>
+                                </select>
+                                <span asp-validation-for="TargetAudience" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label asp-for="ExpiresAt" class="form-label fw-bold">
+                                    <i class="fas fa-calendar-alt me-1"></i> Expiration Date (Optional)
+                                </label>
+                                <input asp-for="ExpiresAt" type="date" class="form-control" />
+                                <span asp-validation-for="ExpiresAt" class="text-danger"></span>
+                                <small class="text-muted">Leave blank if it doesn't expire</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input asp-for="IsUrgent" class="form-check-input" id="isUrgent" />
+                                <label class="form-check-label fw-bold" for="isUrgent">
+                                    <i class="fas fa-exclamation-triangle text-danger me-1"></i> Mark as Urgent
+                                </label>
+                                <p class="small text-muted mt-1 mb-0">Urgent announcements will be highlighted in red and appear at the top</p>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CreatedBy" class="form-label fw-bold">
+                                <i class="fas fa-user me-1"></i> Created By (Optional)
+                            </label>
+                            <input asp-for="CreatedBy" class="form-control" placeholder="Your name or role" />
+                            <span asp-validation-for="CreatedBy" class="text-danger"></span>
+                        </div>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between gap-3">
+                            <a href="/Admin/Announcements" class="btn btn-outline-secondary px-4">
+                                <i class="fas fa-times me-1"></i> Cancel
+                            </a>
+                            <button type="submit" class="btn btn-primary px-5">
+                                <i class="fas fa-paper-plane me-1"></i> Publish Announcement
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
