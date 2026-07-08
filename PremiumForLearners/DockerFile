@@ -1,17 +1,29 @@
-﻿﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+﻿# Stage 1: Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-COPY . .
-RUN dotnet restore "PremiumForLearners.csproj"
-RUN dotnet publish "PremiumForLearners.csproj" -c Release -o /app/publish
+# Copy project file
+COPY *.csproj ./
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+# Restore dependencies
+RUN dotnet restore
+
+# Copy everything else
+COPY . .
+
+# Publish the application
+RUN dotnet publish -c Release -o /app/publish
+
+# Stage 2: Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
 
+# Copy published files
 COPY --from=build /app/publish .
 
+# Render provides the PORT environment variable
 ENV ASPNETCORE_URLS=http://+:10000
 
 EXPOSE 10000
 
-ENTRYPOINT ["dotnet", "PremiumForLearners.dll"]
+ENTRYPOINT ["dotnet", "YourProjectName.dll"]
