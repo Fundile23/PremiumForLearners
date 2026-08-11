@@ -1,19 +1,18 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
 WORKDIR /src
 
-COPY ["PremiumForLearners/PremiumForLearners.csproj", "PremiumForLearners/"]
+COPY PremiumForLearners.csproj .
 
-RUN dotnet restore "PremiumForLearners/PremiumForLearners.csproj"
+RUN dotnet restore
 
 COPY . .
 
-WORKDIR "/src/PremiumForLearners"
-
-RUN dotnet build "PremiumForLearners.csproj" -c Release -o /app/build
-
 RUN dotnet publish "PremiumForLearners.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
+
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
+
 WORKDIR /app
 
 ENV ASPNETCORE_URLS=http://+:10000
