@@ -11,10 +11,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<FileUploadService>();
 
-// Add DbContext with SQL Server
+// Add DbContext with PostgreSQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+      options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); 
 // Add session support
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -59,7 +58,7 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.EnsureCreated();
+  dbContext.Database.Migrate();
     // Create admin user if not exists
     if (!dbContext.Parents.Any(p => p.Email == "admin@premiumlearners.com"))
     {
