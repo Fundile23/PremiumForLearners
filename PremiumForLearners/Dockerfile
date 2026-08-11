@@ -18,6 +18,6 @@ RUN dotnet publish "PremiumForLearners.csproj" -c Release -o /app/publish /p:Use
 # Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS final
 WORKDIR /app
-EXPOSE 1000
+EXPOSE 10000
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "PremiumForLearners.dll"]
