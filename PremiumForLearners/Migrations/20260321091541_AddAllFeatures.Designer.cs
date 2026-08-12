@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PremiumForLearners.Data;
 
@@ -11,9 +12,11 @@ using PremiumForLearners.Data;
 namespace PremiumForLearners.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260321091541_AddAllFeatures")]
+    partial class AddAllFeatures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,50 +106,6 @@ namespace PremiumForLearners.Migrations
                     b.ToTable("AcademicRecords");
                 });
 
-            modelBuilder.Entity("PremiumForLearners.Models.Analytics", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ActiveParents")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ActiveStudents")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("GradeDistribution")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("NewApplications")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NewStudents")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NewTransfers")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PaymentCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("SubjectPopularity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("TotalPayments")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Analytics");
-                });
-
             modelBuilder.Entity("PremiumForLearners.Models.Announcement", b =>
                 {
                     b.Property<int>("Id")
@@ -181,45 +140,6 @@ namespace PremiumForLearners.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Announcements");
-                });
-
-            modelBuilder.Entity("PremiumForLearners.Models.BatchOperation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("CompletedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Data")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Errors")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperationType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProcessedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TotalCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("BatchOperations");
                 });
 
             modelBuilder.Entity("PremiumForLearners.Models.Document", b =>
@@ -273,149 +193,6 @@ namespace PremiumForLearners.Migrations
                     b.HasIndex("StudentId");
 
                     b.ToTable("Documents");
-                });
-
-            modelBuilder.Entity("PremiumForLearners.Models.EnrollmentConfirmation", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Allergies")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ConfirmedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DigitalSignature")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyContactName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EmergencyContactPhone")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FeeReceiptPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("MedicalConditions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("NeedsTransport")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("RegistrationFeePaid")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("TermsAccepted")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("TransportRoute")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("EnrollmentConfirmations");
-                });
-
-            modelBuilder.Entity("PremiumForLearners.Models.FeeStructure", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EffectiveFrom")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("EffectiveTo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FeeType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Grade")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PaymentFrequency")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FeeStructures");
-                });
-
-            modelBuilder.Entity("PremiumForLearners.Models.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AttachmentUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsUrgent")
-                        .HasColumnType("bit");
-
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Sender")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Subject")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("PremiumForLearners.Models.Notification", b =>
@@ -513,27 +290,16 @@ namespace PremiumForLearners.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AdminNotes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Amount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Notes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentType")
@@ -552,12 +318,6 @@ namespace PremiumForLearners.Migrations
 
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("VerifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VerifiedBy")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -636,15 +396,6 @@ namespace PremiumForLearners.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("DocumentsVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("EnrollmentConfirmedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EnrollmentConfirmedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -656,17 +407,11 @@ namespace PremiumForLearners.Migrations
                     b.Property<int>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("PaymentVerified")
-                        .HasColumnType("bit");
-
                     b.Property<string>("PreviousSchool")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecialNeeds")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SubjectsVerified")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("SubmittedAt")
                         .HasColumnType("datetime2");
@@ -721,6 +466,189 @@ namespace PremiumForLearners.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Home Language"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "First Additional Language"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Mathematics"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Mathematical Literacy"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Life Orientation"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = "Sciences",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Physical Sciences",
+                            Prerequisites = "60% in Grade 9 Mathematics"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Category = "Sciences",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Life Sciences"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = "Commerce",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Accounting"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Category = "Commerce",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Business Studies"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = "Humanities",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Geography"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Category = "Humanities",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "History"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Category = "Services",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Tourism"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Category = "Technology",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Computer Applications Tech (CAT)"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Category = "Technology",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Engineering Graphics & Design (EGD)"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Category = "Agriculture",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Agricultural Sciences"
+                        });
                 });
 
             modelBuilder.Entity("PremiumForLearners.Models.SubjectSelection", b =>
@@ -875,45 +803,15 @@ namespace PremiumForLearners.Migrations
                     b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("PremiumForLearners.Models.EnrollmentConfirmation", b =>
-                {
-                    b.HasOne("PremiumForLearners.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("PremiumForLearners.Models.Message", b =>
-                {
-                    b.HasOne("PremiumForLearners.Models.Parent", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("PremiumForLearners.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Parent");
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("PremiumForLearners.Models.Notification", b =>
                 {
                     b.HasOne("PremiumForLearners.Models.Parent", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("PremiumForLearners.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Parent");
 
@@ -925,7 +823,7 @@ namespace PremiumForLearners.Migrations
                     b.HasOne("PremiumForLearners.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Student");
@@ -947,7 +845,7 @@ namespace PremiumForLearners.Migrations
                     b.HasOne("PremiumForLearners.Models.Parent", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Parent");

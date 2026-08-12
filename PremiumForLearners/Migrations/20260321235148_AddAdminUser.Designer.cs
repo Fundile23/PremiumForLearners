@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PremiumForLearners.Data;
 
@@ -11,9 +12,11 @@ using PremiumForLearners.Data;
 namespace PremiumForLearners.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260321235148_AddAdminUser")]
+    partial class AddAdminUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,7 +142,6 @@ namespace PremiumForLearners.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalPayments")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -312,7 +314,6 @@ namespace PremiumForLearners.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("RegistrationFeePaid")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("StudentId")
@@ -340,7 +341,6 @@ namespace PremiumForLearners.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Amount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Description")
@@ -513,11 +513,7 @@ namespace PremiumForLearners.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AdminNotes")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<decimal>("Amount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -533,7 +529,6 @@ namespace PremiumForLearners.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PaymentMethod")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentType")
@@ -553,10 +548,7 @@ namespace PremiumForLearners.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("VerifiedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("VerifiedBy")
+                    b.Property<string>("TransactionId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -636,15 +628,6 @@ namespace PremiumForLearners.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("DocumentsVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("EnrollmentConfirmedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EnrollmentConfirmedBy")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -656,17 +639,11 @@ namespace PremiumForLearners.Migrations
                     b.Property<int>("ParentId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("PaymentVerified")
-                        .HasColumnType("bit");
-
                     b.Property<string>("PreviousSchool")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecialNeeds")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("SubjectsVerified")
-                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("SubmittedAt")
                         .HasColumnType("datetime2");
@@ -721,6 +698,189 @@ namespace PremiumForLearners.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Home Language"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "First Additional Language"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Mathematics"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Mathematical Literacy"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Category = "Core",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = true,
+                            Name = "Life Orientation"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Category = "Sciences",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Physical Sciences",
+                            Prerequisites = "60% in Grade 9 Mathematics"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Category = "Sciences",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Life Sciences"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Category = "Commerce",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Accounting"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Category = "Commerce",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Business Studies"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Category = "Humanities",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Geography"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Category = "Humanities",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "History"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Category = "Services",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Tourism"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Category = "Technology",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Computer Applications Tech (CAT)"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Category = "Technology",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Engineering Graphics & Design (EGD)"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Category = "Agriculture",
+                            Code = "",
+                            Credits = 4,
+                            Description = "",
+                            Grade = "10",
+                            IsActive = true,
+                            IsCore = false,
+                            Name = "Agricultural Sciences"
+                        });
                 });
 
             modelBuilder.Entity("PremiumForLearners.Models.SubjectSelection", b =>
@@ -890,13 +1050,11 @@ namespace PremiumForLearners.Migrations
                 {
                     b.HasOne("PremiumForLearners.Models.Parent", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("PremiumForLearners.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Parent");
 
@@ -907,13 +1065,11 @@ namespace PremiumForLearners.Migrations
                 {
                     b.HasOne("PremiumForLearners.Models.Parent", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("ParentId");
 
                     b.HasOne("PremiumForLearners.Models.Student", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Parent");
 
@@ -925,7 +1081,7 @@ namespace PremiumForLearners.Migrations
                     b.HasOne("PremiumForLearners.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Student");
@@ -947,7 +1103,7 @@ namespace PremiumForLearners.Migrations
                     b.HasOne("PremiumForLearners.Models.Parent", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Parent");
