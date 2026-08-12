@@ -11,9 +11,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<FileUploadService>();
 
-// Add DbContext with SQL Server
+// Add DbContext with PostgreSQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+   options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); 
 
 // Add session support
 builder.Services.AddDistributedMemoryCache();
